@@ -17,7 +17,7 @@ jobs:
             username: ${{ secrets.EC2_USER }}
             key: ${{ secrets.EC2_SSH_KEY }}
             source: "database.sql"
-            target: "~"
+            target: "~/"
 
         - name: SSH into EC2 and deploy container
           uses: appleboy/ssh-action@v0.1.10
@@ -26,8 +26,8 @@ jobs:
             username: ${{ secrets.EC2_USER }}
             key: ${{ secrets.EC2_SSH_KEY }}
             script: | 
-              docker cp database.sql postgresql-dev:/~
-              docker exec -i postgresql-dev psql -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB }} -f /~/database.sql
+              docker cp /home/${{ secrets.EC2_USER }}/database.sql postgresql-dev:/tmp/database.sql
+              docker exec -i postgresql-dev psql -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB }} -f /tmp/database.sql
 
             
 
