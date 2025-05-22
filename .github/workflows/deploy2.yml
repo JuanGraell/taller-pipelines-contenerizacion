@@ -10,6 +10,10 @@ jobs:
 
       steps:
 
+        - name: Checkout del repositorio
+          uses: actions/checkout@v4
+
+
         - name: Copiar archivo a EC2 vía SSH
           uses: appleboy/scp-action@v0.1.7
           with:
